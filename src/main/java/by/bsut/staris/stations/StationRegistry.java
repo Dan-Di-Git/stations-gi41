@@ -15,5 +15,10 @@ public final class StationRegistry {
         return stations;
     }
 
+    private final List<Station> stations = List.of(
+            new Station("Гомель-Пассажирский", Line.GOMEL_ZHLOBIN, StationType.PASSENGER, 0),
+            new Station("Демехи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 57)
+            // новые станции добавляются в конец списка
+    );
     // новые методы добавляются в конец класса
 }
