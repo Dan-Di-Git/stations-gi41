@@ -38,5 +38,13 @@ class StationRegistryTest {
         assertTrue(registry.all().stream().allMatch(station -> station.distanceFromGomelKm() >= 0));
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Демехи с корректными атрибутами")
+    void containsDemekhi() {
+        Station demekhi = station("Демехи");
+        assertEquals(Line.GOMEL_KALINKOVICHI, demekhi.line());
+        assertEquals(StationType.INTERMEDIATE, demekhi.type());
+        assertEquals(57, demekhi.distanceFromGomelKm());
+    }
     // тесты новых станций и методов добавляются в конец класса
 }
