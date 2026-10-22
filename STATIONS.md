@@ -7,3 +7,4 @@
 | --- | --- | --- | --- |
 | Гомель-Пассажирский | GOMEL_ZHLOBIN | PASSENGER | 0 |
 | Демехи | GOMEL_KALINKOVICHI | INTERMEDIATE | 57 |
+| Тереховка | GOMEL_BAKHMACH | INTERMEDIATE | 43 |
