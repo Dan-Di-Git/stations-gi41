@@ -7,7 +7,8 @@ public final class StationRegistry {
 
     private final List<Station> stations = List.of(
             new Station("Гомель-Пассажирский", Line.GOMEL_ZHLOBIN, StationType.PASSENGER, 0),
-            new Station("Демехи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 57)
+            new Station("Демехи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 57),
+            new Station("Тереховка", Line.GOMEL_BAKHMACH, StationType.INTERMEDIATE, 43)
         // новые станции добавляются в конец списка
     );
 

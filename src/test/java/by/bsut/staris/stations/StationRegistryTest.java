@@ -46,5 +46,14 @@ class StationRegistryTest {
         assertEquals(StationType.INTERMEDIATE, demekhi.type());
         assertEquals(57, demekhi.distanceFromGomelKm());
     }
+
+    @Test
+    @DisplayName("Справочник содержит станцию Тереховка с корректными атрибутами")
+    void containsTerekhovka() {
+        Station terekhovka = station("Тереховка");
+        assertEquals(Line.GOMEL_BAKHMACH, terekhovka.line());
+        assertEquals(StationType.INTERMEDIATE, terekhovka.type());
+        assertEquals(43, terekhovka.distanceFromGomelKm());
+    }
     // тесты новых станций и методов добавляются в конец класса
 }
