@@ -56,8 +56,8 @@ class StationRegistryTest {
     void returnsFarthestStation() {
         Station farthest = registry.farthest().orElseThrow();
 
-        assertEquals("Демехи", farthest.name());
-        assertEquals(57, farthest.distanceFromGomelKm());
+        assertEquals("Житковичи", farthest.name());
+        assertEquals(238, farthest.distanceFromGomelKm());
     }
 
     @Test
@@ -82,6 +82,15 @@ class StationRegistryTest {
                 new StationRegistry(List.of(gomel));
 
         assertEquals(gomel, singleStationRegistry.farthest().orElseThrow());
+    }
+
+    @Test
+    @DisplayName("Справочник содержит станцию Житковичи с корректными атрибутами")
+    void containsZhitkovichi() {
+        Station zhitkovichi = station("Житковичи");
+        assertEquals(Line.GOMEL_LUNINETS, zhitkovichi.line());
+        assertEquals(StationType.INTERMEDIATE, zhitkovichi.type());
+        assertEquals(238, zhitkovichi.distanceFromGomelKm());
     }
     // тесты новых станций и методов добавляются в конец класса
 }
