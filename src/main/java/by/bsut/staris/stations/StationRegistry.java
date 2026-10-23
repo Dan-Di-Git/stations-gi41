@@ -1,6 +1,7 @@
 package by.bsut.staris.stations;
 
 import java.util.List;
+import java.util.Optional;
 
 /** Справочник станций Гомельского отделения Белорусской железной дороги. */
 public final class StationRegistry {
@@ -15,6 +16,21 @@ public final class StationRegistry {
     /** Возвращает все станции справочника. */
     public List<Station> all() {
         return stations;
+    }
+    /**
+     * Ищет станцию по полному наименованию без учёта регистра и пробелов по краям.
+     *
+     * @return найденная станция или {@link Optional#empty()}, если имя неизвестно,
+     *         пусто или равно {@code null}
+     */
+    public Optional<Station> findByName(String name) {
+        if (name == null) {
+            return Optional.empty();
+        }
+        String normalizedName = name.strip();
+        return stations.stream()
+                .filter(station -> station.name().equalsIgnoreCase(normalizedName))
+                .findFirst();
     }
     // новые методы добавляются в конец класса
 }
