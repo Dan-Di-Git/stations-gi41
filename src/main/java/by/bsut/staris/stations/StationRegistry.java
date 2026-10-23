@@ -13,7 +13,8 @@ public final class StationRegistry {
         this.stations = List.of(
                 new Station("Гомель-Пассажирский", Line.GOMEL_ZHLOBIN, StationType.PASSENGER, 0),
                 new Station("Демехи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 57),
-                new Station("Житковичи", Line.GOMEL_LUNINETS, StationType.INTERMEDIATE, 238)
+                new Station("Житковичи", Line.GOMEL_LUNINETS, StationType.INTERMEDIATE, 238),
+                new Station("Калинковичи", Line.GOMEL_KALINKOVICHI, StationType.DIVISIONAL, 125)
                 // новые станции добавляются в конец списка
         );
     }
@@ -31,6 +32,22 @@ public final class StationRegistry {
     public Optional<Station> farthest() {
         return stations.stream()
                 .max(Comparator.comparingInt(Station::distanceFromGomelKm));
+    }
+
+    /**
+     * Ищет станцию по полному наименованию без учёта регистра и пробелов по краям.
+     *
+     * @return найденная станция или {@link Optional#empty()}, если имя неизвестно,
+     *         пусто или равно {@code null}
+     */
+    public Optional<Station> findByName(String name) {
+        if (name == null) {
+            return Optional.empty();
+        }
+        String normalizedName = name.strip();
+        return stations.stream()
+                .filter(station -> station.name().equalsIgnoreCase(normalizedName))
+                .findFirst();
     }
     // новые методы добавляются в конец класса
 }
