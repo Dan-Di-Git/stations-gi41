@@ -46,5 +46,14 @@ class StationRegistryTest {
         assertEquals(StationType.INTERMEDIATE, demekhi.type());
         assertEquals(57, demekhi.distanceFromGomelKm());
     }
+
+    @Test
+    @DisplayName("Справочник содержит станцию Житковичи с корректными атрибутами")
+    void containsZhitkovichi() {
+        Station zhitkovichi = station("Житковичи");
+        assertEquals(Line.GOMEL_LUNINETS, zhitkovichi.line());
+        assertEquals(StationType.INTERMEDIATE, zhitkovichi.type());
+        assertEquals(238, zhitkovichi.distanceFromGomelKm());
+    }
     // тесты новых станций и методов добавляются в конец класса
 }
