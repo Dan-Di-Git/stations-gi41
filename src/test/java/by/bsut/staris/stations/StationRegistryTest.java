@@ -60,6 +60,14 @@ class StationRegistryTest {
         assertEquals(StationType.INTERMEDIATE, zhitkovichi.type());
         assertEquals(238, zhitkovichi.distanceFromGomelKm());
     }
+    @Test
+    @DisplayName("Справочник содержит станцию Калинковичи с корректными атрибутами")
+    void containsKalinkovichi() {
+        Station kalinkovichi = station("Калинковичи");
+        assertEquals(Line.GOMEL_KALINKOVICHI, kalinkovichi.line());
+        assertEquals(StationType.DIVISIONAL, kalinkovichi.type());
+        assertEquals(125, kalinkovichi.distanceFromGomelKm());
+    }
 
     @Test
     @DisplayName("Поиск по точному имени возвращает каждую станцию справочника")
