@@ -49,5 +49,24 @@ public final class StationRegistry {
                 .filter(station -> station.name().equalsIgnoreCase(normalizedName))
                 .findFirst();
     }
+    
+    /**
+ * Возвращает наименования станций с заданным префиксом без учёта регистра,
+ * в алфавитном порядке.
+ *
+ * @throws IllegalArgumentException если {@code prefix} равен {@code null}
+ */
+public List<String> namesStartingWith(String prefix) {
+    if (prefix == null) {
+        throw new IllegalArgumentException("Префикс не задан");
+    }
+    return stations.stream()
+            .map(Station::name)
+            .filter(name -> name.regionMatches(true, 0, prefix, 0, prefix.length()))
+            .sorted()
+            .toList();
+}
+
+    
     // новые методы добавляются в конец класса
 }
