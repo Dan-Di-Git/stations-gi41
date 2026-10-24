@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 class StationRegistryTest {
@@ -150,13 +151,42 @@ class StationRegistryTest {
     }
     
     @Test
-@DisplayName("Справочник содержит станцию Василевичи с корректными атрибутами")
-void containsVasilevichi() {
-    Station vasilevichi = station("Василевичи");
-    assertEquals(Line.GOMEL_KALINKOVICHI, vasilevichi.line());
-    assertEquals(StationType.INTERMEDIATE, vasilevichi.type());
-    assertEquals(86, vasilevichi.distanceFromGomelKm());
-}
+    @DisplayName("Справочник содержит станцию Василевичи с корректными атрибутами")
+    void containsVasilevichi() {
+        Station vasilevichi = station("Василевичи");
+        assertEquals(Line.GOMEL_KALINKOVICHI, vasilevichi.line());
+        assertEquals(StationType.INTERMEDIATE, vasilevichi.type());
+        assertEquals(86, vasilevichi.distanceFromGomelKm());
+    }
+
+    @Test
+    @DisplayName("namesStartingWith не учитывает регистр и сортирует названия по алфавиту")
+    void namesStartingWithIgnoresCaseAndSorts() {
+        StationRegistry sample = new StationRegistry(List.of(
+                new Station("Калинковичи", Line.GOMEL_KALINKOVICHI, StationType.DIVISIONAL, 125),
+                new Station("Житковичи", Line.GOMEL_LUNINETS, StationType.INTERMEDIATE, 238),
+                new Station("Демехи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 57)
+        ));
+
+        assertEquals(List.of("Житковичи"), sample.namesStartingWith("ж"));
+        assertEquals(
+                List.of("Демехи", "Житковичи", "Калинковичи"),
+                sample.namesStartingWith("")
+        );
+    }
+
+    @Test
+    @DisplayName("namesStartingWith возвращает пустой список, если префикс никому не подходит")
+    void namesStartingWithReturnsEmptyWhenNothingMatches() {
+        assertEquals(List.of(), new StationRegistry().namesStartingWith("Ыыы"));
+    }
+
+    @Test
+    @DisplayName("namesStartingWith не принимает null")
+    void namesStartingWithRejectsNull() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new StationRegistry().namesStartingWith(null));
+    }
 
     // тесты новых станций и методов добавляются в конец класса
 }
