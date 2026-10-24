@@ -148,5 +148,15 @@ class StationRegistryTest {
     void findByNameDoesNotMatchPartialOrAlteredName(String name) {
         assertEquals(Optional.empty(), registry.findByName(name));
     }
+    
+    @Test
+@DisplayName("Справочник содержит станцию Василевичи с корректными атрибутами")
+void containsVasilevichi() {
+    Station vasilevichi = station("Василевичи");
+    assertEquals(Line.GOMEL_KALINKOVICHI, vasilevichi.line());
+    assertEquals(StationType.INTERMEDIATE, vasilevichi.type());
+    assertEquals(86, vasilevichi.distanceFromGomelKm());
+}
+
     // тесты новых станций и методов добавляются в конец класса
 }
