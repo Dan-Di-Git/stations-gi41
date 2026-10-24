@@ -1,5 +1,7 @@
 package by.bsut.staris.stations;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class StationRegistryTest {
 
@@ -50,6 +53,40 @@ class StationRegistryTest {
         assertEquals(Line.GOMEL_KALINKOVICHI, demekhi.line());
         assertEquals(StationType.INTERMEDIATE, demekhi.type());
         assertEquals(57, demekhi.distanceFromGomelKm());
+    }
+
+
+    @Test
+    @DisplayName("Возвращается самая удалённая станция")
+    void returnsFarthestStation() {
+        Station farthest = registry.farthest().orElseThrow();
+
+        assertEquals("Житковичи", farthest.name());
+        assertEquals(238, farthest.distanceFromGomelKm());
+    }
+
+    @Test
+    @DisplayName("Пустой справочник возвращает пустой результат")
+    void returnsEmptyWhenRegistryIsEmpty() {
+        StationRegistry emptyRegistry = new StationRegistry(List.of());
+
+        assertTrue(emptyRegistry.farthest().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Справочник с одной станцией возвращает её")
+    void returnsOnlyStationWhenRegistryHasOneStation() {
+        Station gomel = new Station(
+                "Гомель-Пассажирский",
+                Line.GOMEL_ZHLOBIN,
+                StationType.PASSENGER,
+                0
+        );
+
+        StationRegistry singleStationRegistry =
+                new StationRegistry(List.of(gomel));
+
+        assertEquals(gomel, singleStationRegistry.farthest().orElseThrow());
     }
 
     @Test
