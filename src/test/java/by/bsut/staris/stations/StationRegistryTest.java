@@ -151,7 +151,6 @@ class StationRegistryTest {
     }
     
     @Test
-    @Test
     @DisplayName("Справочник содержит станцию Василевичи с корректными атрибутами")
     void containsVasilevichi() {
         Station vasilevichi = station("Василевичи");
