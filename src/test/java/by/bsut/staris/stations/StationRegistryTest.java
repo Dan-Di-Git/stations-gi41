@@ -56,7 +56,6 @@ class StationRegistryTest {
         assertEquals(57, demekhi.distanceFromGomelKm());
     }
 
-
     @Test
     @DisplayName("Возвращается самая удалённая станция")
     void returnsFarthestStation() {
@@ -188,6 +187,15 @@ class StationRegistryTest {
                 () -> new StationRegistry().namesStartingWith(null));
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Тереховка с корректными атрибутами")
+    void containsTerekhovka() {
+        Station terekhovka = station("Тереховка");
+        assertEquals(Line.GOMEL_BAKHMACH, terekhovka.line());
+        assertEquals(StationType.INTERMEDIATE, terekhovka.type());
+        assertEquals(43, terekhovka.distanceFromGomelKm());
+    }    
+  
     @Test
     @DisplayName("distanceBetween возвращает модуль разности расстояний для станций одного направления")
     void distanceBetweenReturnsDistanceForSameLine() {
