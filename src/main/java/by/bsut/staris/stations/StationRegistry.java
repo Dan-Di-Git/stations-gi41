@@ -25,9 +25,30 @@ public final class StationRegistry {
         this.stations = List.copyOf(stations);
     }
 
-    /** Возвращает все станции справочника. */
     public List<Station> all() {
         return stations;
+    }
+
+
+
+    public String toMarkdownTable() {
+        StringBuilder table = new StringBuilder();
+        table.append("| Станция | Направление | Тип | Расстояние от Гомеля, км |\n");
+        table.append("| --- | --- | --- | --- |\n");
+        for (Station station : stations) {
+            table.append("| ").append(escapeCell(station.name()))
+                    .append(" | ").append(escapeCell(station.line().name()))
+                    .append(" | ").append(escapeCell(station.type().name()))
+                    .append(" | ").append(station.distanceFromGomelKm())
+                    .append(" |\n");
+        }
+        return table.toString();
+    }
+
+    static String escapeCell(String value) {
+        return value.replace("\r", " ")
+                .replace("\n", " ")
+                .replace("|", "\\|");
     }
 
     /** Возвращает самую удалённую от Гомеля станцию. */
@@ -69,6 +90,7 @@ public List<String> namesStartingWith(String prefix) {
             .toList();
 }
 
-    
+
     // новые методы добавляются в конец класса
 }
+
