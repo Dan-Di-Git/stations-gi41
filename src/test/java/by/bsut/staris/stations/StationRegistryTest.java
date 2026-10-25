@@ -291,5 +291,31 @@ class StationRegistryTest {
         assertEquals(0, registry.distanceBetween("демехи", "ДЕМЕХИ"));
     }
 
+    // блок тестов метода M1
+    @Test
+    @DisplayName("findByLine возвращает все станции заданного направления")
+    void findByLineReturnsStationsForLine() {
+        List<Station> stations = registry.findByLine(Line.GOMEL_KALINKOVICHI);
+        assertEquals(4, stations.size());
+        assertTrue(stations.stream().allMatch(s -> s.line() == Line.GOMEL_KALINKOVICHI));
+        assertTrue(stations.stream().anyMatch(s -> s.name().equals("Словечно")));
+    }
+
+    @Test
+    @DisplayName("findByLine возвращает пустой список, если станций на направлении нет")
+    void findByLineReturnsEmptyListForLineWithoutStations() {
+        StationRegistry emptyRegistry = new StationRegistry(List.of());
+        List<Station> stations = emptyRegistry.findByLine(Line.GOMEL_LUNINETS);
+        assertNotNull(stations);
+        assertTrue(stations.isEmpty());
+    }
+
+    @Test
+    @DisplayName("findByLine выбрасывает исключение при передаче null")
+    void findByLineThrowsExceptionForNull() {
+        assertThrows(IllegalArgumentException.class, 
+                () -> registry.findByLine(null));
+    }
+
     // тесты новых станций и методов добавляются в конец класса
 }
