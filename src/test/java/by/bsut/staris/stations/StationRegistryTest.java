@@ -295,13 +295,21 @@ class StationRegistryTest {
 
     // блок тестов метода M1
     @Test
-    @DisplayName("findByLine возвращает только станции заданного направления")
-    void findByLineReturnsOnlyStationsForLine() {
-        List<Station> stations = registry.findByLine(Line.GOMEL_KALINKOVICHI);
-        assertFalse(stations.isEmpty());
-        assertTrue(stations.stream().allMatch(s -> s.line() == Line.GOMEL_KALINKOVICHI));
-        // В списке точно должна быть Словечно 
-        assertTrue(stations.stream().anyMatch(s -> s.name().equals("Словечно")));
+    @DisplayName("findByLine корректно фильтрует станции (изолированный тест)")
+    void findByLineFiltersCorrectly() {
+        Station station1 = new Station("Тестовая 1", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 10);
+        Station station2 = new Station("Тестовая 2", Line.GOMEL_LUNINETS, StationType.INTERMEDIATE, 20);
+        Station station3 = new Station("Тестовая 3", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 30);
+        
+        StationRegistry testRegistry = new StationRegistry(List.of(station1, station2, station3));
+        
+        List<Station> result = testRegistry.findByLine(Line.GOMEL_KALINKOVICHI);
+        
+        assertEquals(2, result.size());
+
+        assertTrue(result.contains(station1));
+        assertTrue(result.contains(station3));
+        assertFalse(result.contains(station2));
     }
 
     @Test
