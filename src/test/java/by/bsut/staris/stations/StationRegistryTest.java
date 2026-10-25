@@ -93,5 +93,23 @@ class StationRegistryTest {
             assertEquals(expected, lines.get(i + 2));
         }
     }
+
+    @Test
+    @DisplayName("escapeCell: символ | экранируется обратной косой чертой")
+    void escapeCellEscapesPipe() {
+        assertEquals("Станция A\\|B", StationRegistry.escapeCell("Станция A|B"));
+    }
+
+    @Test
+    @DisplayName("escapeCell: переводы строк заменяются пробелами")
+    void escapeCellReplacesLineBreaks() {
+        assertEquals("A B C", StationRegistry.escapeCell("A\nB\rC"));
+    }
+
+    @Test
+    @DisplayName("escapeCell: обычное название остаётся без изменений")
+    void escapeCellKeepsPlainName() {
+        assertEquals("Гомель-Пассажирский", StationRegistry.escapeCell("Гомель-Пассажирский"));
+    }
     // тесты новых станций и методов добавляются в конец класса
 }
