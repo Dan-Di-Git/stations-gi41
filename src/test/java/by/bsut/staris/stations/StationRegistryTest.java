@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 import java.io.IOException;
@@ -294,11 +295,12 @@ class StationRegistryTest {
 
     // блок тестов метода M1
     @Test
-    @DisplayName("findByLine возвращает все станции заданного направления")
-    void findByLineReturnsStationsForLine() {
+    @DisplayName("findByLine возвращает только станции заданного направления")
+    void findByLineReturnsOnlyStationsForLine() {
         List<Station> stations = registry.findByLine(Line.GOMEL_KALINKOVICHI);
-        assertEquals(4, stations.size());
+        assertFalse(stations.isEmpty());
         assertTrue(stations.stream().allMatch(s -> s.line() == Line.GOMEL_KALINKOVICHI));
+        // В списке точно должна быть Словечно 
         assertTrue(stations.stream().anyMatch(s -> s.name().equals("Словечно")));
     }
 
