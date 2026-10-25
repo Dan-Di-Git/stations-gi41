@@ -108,6 +108,15 @@ public List<String> namesStartingWith(String prefix) {
         return Math.abs(stationA.distanceFromGomelKm() - stationB.distanceFromGomelKm());
     }
 
+    public List<Station> findByLine(Line line) {
+        if (line == null) {
+            throw new IllegalArgumentException("Направление не задано");
+        }
+        return stations.stream()
+                .filter(station -> station.line() == line)
+                .toList();
+    }
+    
     // новые методы добавляются в конец класса
 }
 
