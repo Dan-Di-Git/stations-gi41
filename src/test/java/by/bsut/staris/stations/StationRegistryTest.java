@@ -330,5 +330,14 @@ class StationRegistryTest {
         assertEquals(registry.all().size(), total);
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Уза с корректными атрибутами")
+    void containsUza() {
+        Station uza = station("Уза");
+        assertEquals(Line.GOMEL_ZHLOBIN, uza.line());
+        assertEquals(StationType.INTERMEDIATE, uza.type());
+        assertEquals(23, uza.distanceFromGomelKm());
+    }
+
     // тесты новых станций и методов добавляются в конец класса
 }
