@@ -3,7 +3,9 @@ package by.bsut.staris.stations;
 import java.util.List;
 import java.util.Comparator;
 import java.util.Optional;
-
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 /** Справочник станций Гомельского отделения Белорусской железной дороги. */
 public final class StationRegistry {
 
@@ -17,6 +19,7 @@ public final class StationRegistry {
                 new Station("Калинковичи", Line.GOMEL_KALINKOVICHI, StationType.DIVISIONAL, 125),
                 new Station("Василевичи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 86),
                 new Station("Тереховка", Line.GOMEL_BAKHMACH, StationType.INTERMEDIATE, 43),
+                new Station("Уза", Line.GOMEL_ZHLOBIN, StationType.INTERMEDIATE, 23),
                 new Station("Словечно", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 194)
                 // новые станции добавляются в конец списка
         );
@@ -107,6 +110,17 @@ public List<String> namesStartingWith(String prefix) {
         }
 
         return Math.abs(stationA.distanceFromGomelKm() - stationB.distanceFromGomelKm());
+    }
+    /**
+     * Возвращает число станций по направлениям.
+     * Направления без станций в результат не включаются.
+     */
+    public Map<Line, Long> countByLine() {
+        return stations.stream()
+                .collect(Collectors.groupingBy(
+                        Station::line,
+                        () -> new EnumMap<>(Line.class),
+                        Collectors.counting()));
     }
 
     // новые методы добавляются в конец класса
