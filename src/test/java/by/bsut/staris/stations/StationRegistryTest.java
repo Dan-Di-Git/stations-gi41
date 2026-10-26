@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
+import java.util.Map;
 class StationRegistryTest {
 
     private final StationRegistry registry = new StationRegistry();
@@ -291,6 +291,54 @@ class StationRegistryTest {
     void distanceBetweenReturnsZeroForSameStation() {
         assertEquals(0, registry.distanceBetween("Демехи", "Демехи"));
         assertEquals(0, registry.distanceBetween("демехи", "ДЕМЕХИ"));
+    }
+    @Test
+
+    @DisplayName("countByLine считает станции по направлениям")
+    void countByLineCountsStationsPerLine() {
+        StationRegistry sample = new StationRegistry(List.of(
+                new Station("Демехи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 57),
+                new Station("Калинковичи", Line.GOMEL_KALINKOVICHI, StationType.DIVISIONAL, 125),
+                new Station("Житковичи", Line.GOMEL_LUNINETS, StationType.INTERMEDIATE, 238)
+        ));
+
+        assertEquals(
+                Map.of(Line.GOMEL_KALINKOVICHI, 2L, Line.GOMEL_LUNINETS, 1L),
+                sample.countByLine());
+    }
+
+    @Test
+    @DisplayName("countByLine возвращает пустую карту для пустого справочника")
+    void countByLineReturnsEmptyMapForEmptyRegistry() {
+        assertTrue(new StationRegistry(List.of()).countByLine().isEmpty());
+    }
+
+    @Test
+    @DisplayName("countByLine не включает направления без станций")
+    void countByLineOmitsLinesWithoutStations() {
+        StationRegistry single = new StationRegistry(List.of(
+                new Station("Гомель-Пассажирский", Line.GOMEL_ZHLOBIN, StationType.PASSENGER, 0)));
+
+        Map<Line, Long> counts = single.countByLine();
+
+        assertEquals(Map.of(Line.GOMEL_ZHLOBIN, 1L), counts);
+        assertFalse(counts.containsKey(Line.GOMEL_BRYANSK));
+    }
+
+    @Test
+    @DisplayName("countByLine: сумма по направлениям равна числу станций справочника")
+    void countByLineSumsToRegistrySize() {
+        long total = registry.countByLine().values().stream().mapToLong(Long::longValue).sum();
+        assertEquals(registry.all().size(), total);
+    }
+
+    @Test
+    @DisplayName("Справочник содержит станцию Уза с корректными атрибутами")
+    void containsUza() {
+        Station uza = station("Уза");
+        assertEquals(Line.GOMEL_ZHLOBIN, uza.line());
+        assertEquals(StationType.INTERMEDIATE, uza.type());
+        assertEquals(23, uza.distanceFromGomelKm());
     }
 
     // блок тестов метода M1
