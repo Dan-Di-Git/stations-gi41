@@ -13,7 +13,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -357,6 +359,36 @@ class StationRegistryTest {
         assertEquals(194, slovechno.distanceFromGomelKm());
     }
 
-    // тесты новых станций и методов добавляются в конец класса
+    // блок тестов метода M1
+    @Test
+    @DisplayName("findByLine корректно фильтрует станции (изолированный тест)")
+    void findByLineFiltersCorrectly() {
+        Station station1 = new Station("Тестовая 1", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 10);
+        Station station2 = new Station("Тестовая 2", Line.GOMEL_LUNINETS, StationType.INTERMEDIATE, 20);
+        Station station3 = new Station("Тестовая 3", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 30);
+        StationRegistry testRegistry = new StationRegistry(List.of(station1, station2, station3));
+        List<Station> result = testRegistry.findByLine(Line.GOMEL_KALINKOVICHI);
+        assertEquals(2, result.size());
+        assertTrue(result.contains(station1));
+        assertTrue(result.contains(station3));
+        assertFalse(result.contains(station2));
+    }
 
+    @Test
+    @DisplayName("findByLine возвращает пустой список, если станций на направлении нет")
+    void findByLineReturnsEmptyListForLineWithoutStations() {
+        StationRegistry emptyRegistry = new StationRegistry(List.of());
+        List<Station> stations = emptyRegistry.findByLine(Line.GOMEL_LUNINETS);
+        assertNotNull(stations);
+        assertTrue(stations.isEmpty());
+    }
+
+    @Test
+    @DisplayName("findByLine выбрасывает исключение при передаче null")
+    void findByLineThrowsExceptionForNull() {
+        assertThrows(IllegalArgumentException.class, 
+                () -> registry.findByLine(null));
+    }
+
+    // тесты новых станций и методов добавляются в конец класса
 }
