@@ -339,12 +339,19 @@ class StationRegistryTest {
         assertEquals(23, uza.distanceFromGomelKm());
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Гомель-Сортировочный с корректными атрибутами")
+    void containsGomelSortirovochny() {
+        Station sortirovochny = station("Гомель-Сортировочный");
+        assertEquals(Line.GOMEL_ZHLOBIN, sortirovochny.line());
+        assertEquals(StationType.MARSHALLING, sortirovochny.type());
+        assertEquals(5, sortirovochny.distanceFromGomelKm());
+    }
 
     @Test
     @DisplayName("Справочник содержит станцию Словечно с корректными атрибутами")
     void containsSlovechno() {
         Station slovechno = station("Словечно");
-        
         assertEquals(Line.GOMEL_KALINKOVICHI, slovechno.line());
         assertEquals(StationType.INTERMEDIATE, slovechno.type()); 
         assertEquals(194, slovechno.distanceFromGomelKm());
