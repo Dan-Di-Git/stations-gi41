@@ -1,17 +1,15 @@
 package by.bsut.staris.stations;
 
 import java.util.List;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /** Справочник станций Гомельского отделения Белорусской железной дороги. */
 public final class StationRegistry {
 
-<<<<<<< Updated upstream
-    private final List<Station> stations = List.of(
-        new Station("Гомель-Пассажирский", Line.GOMEL_ZHLOBIN, StationType.PASSENGER, 0),
-        new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 5)
-        // новые станции добавляются в конец списка
-    );
-=======
     private final List<Station> stations;
 
     public StationRegistry() {
@@ -31,11 +29,91 @@ public final class StationRegistry {
     public StationRegistry(List<Station> stations) {
         this.stations = List.copyOf(stations);
     }
->>>>>>> Stashed changes
 
     /** Возвращает все станции справочника. */
     public List<Station> all() {
         return stations;
+    }
+
+    public String toMarkdownTable() {
+        StringBuilder table = new StringBuilder();
+        table.append("| Станция | Направление | Тип | Расстояние от Гомеля, км |\n");
+        table.append("| --- | --- | --- | --- |\n");
+        for (Station station : stations) {
+            table.append("| ").append(escapeCell(station.name()))
+                    .append(" | ").append(escapeCell(station.line().name()))
+                    .append(" | ").append(escapeCell(station.type().name()))
+                    .append(" | ").append(station.distanceFromGomelKm())
+                    .append(" |\n");
+        }
+        return table.toString();
+    }
+
+    static String escapeCell(String value) {
+        return value.replace("\r", " ")
+                .replace("\n", " ")
+                .replace("|", "\\|");
+    }
+
+    /** Возвращает самую удалённую от Гомеля станцию. */
+    public Optional<Station> farthest() {
+        return stations.stream()
+                .max(Comparator.comparingInt(Station::distanceFromGomelKm));
+    }
+
+    /**
+     * Ищет станцию по полному наименованию без учёта регистра и пробелов по краям.
+     */
+    public Optional<Station> findByName(String name) {
+        if (name == null) {
+            return Optional.empty();
+        }
+        String normalizedName = name.strip();
+        return stations.stream()
+                .filter(station -> station.name().equalsIgnoreCase(normalizedName))
+                .findFirst();
+    }
+    
+    /**
+     * Возвращает наименования станций с заданным префиксом без учёта регистра,
+     * в алфавитном порядке.
+     */
+    public List<String> namesStartingWith(String prefix) {
+        if (prefix == null) {
+            throw new IllegalArgumentException("Префикс не задан");
+        }
+        return stations.stream()
+                .map(Station::name)
+                .filter(name -> name.regionMatches(true, 0, prefix, 0, prefix.length()))
+                .sorted()
+                .toList();
+    }
+
+    /**
+     * Возвращает модуль разности расстояний для станций одного направления.
+     */
+    public int distanceBetween(String a, String b) {
+        Station stationA = findByName(a)
+                .orElseThrow(() -> new IllegalArgumentException("Станция не найдена: " + a));
+        Station stationB = findByName(b)
+                .orElseThrow(() -> new IllegalArgumentException("Станция не найдена: " + b));
+
+        if (stationA.line() != stationB.line()) {
+            throw new IllegalArgumentException("Станции относятся к разным направлениям");
+        }
+
+        return Math.abs(stationA.distanceFromGomelKm() - stationB.distanceFromGomelKm());
+    }
+
+    /**
+     * Возвращает число станций по направлениям.
+     */
+    public Map<Line, Long> countByLine() {
+        return stations.stream()
+                .collect(Collectors.groupingBy(
+                        Station::line,
+                        () -> new EnumMap<>(Line.class),
+                        Collectors.counting()));
     }
 
     // новые методы добавляются в конец класса

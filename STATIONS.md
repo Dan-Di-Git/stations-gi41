@@ -6,9 +6,7 @@
 | Станция | Направление | Тип | Расстояние от Гомеля, км |
 | --- | --- | --- | --- |
 | Гомель-Пассажирский | GOMEL_ZHLOBIN | PASSENGER | 0 |
-<<<<<<< Updated upstream
 | Гомель-Сортировочный | GOMEL_ZHLOBIN | MARSHALLING | 5 |
-=======
 | Демехи | GOMEL_KALINKOVICHI | INTERMEDIATE | 57 |
 | Житковичи | GOMEL_LUNINETS | INTERMEDIATE | 238 |
 | Калинковичи | GOMEL_KALINKOVICHI | DIVISIONAL | 125 |
@@ -16,4 +14,3 @@
 | Тереховка | GOMEL_BAKHMACH | INTERMEDIATE | 43 |
 | Уза | GOMEL_ZHLOBIN | INTERMEDIATE | 23 |
 | Гомель-Сортировочный | GOMEL_ZHLOBIN | MARSHALLING | 6 |
->>>>>>> Stashed changes
