@@ -64,7 +64,7 @@ class StationRegistryTest {
 
     @Test
     void testGomelSortirovochnyExists() {
-        var station = new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 5);
+        var station = new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 6);
         org.junit.jupiter.api.Assertions.assertTrue(
             new StationRegistry().all().contains(station),
             "Станция Гомель-Сортировочный должна присутствовать в справочнике"
