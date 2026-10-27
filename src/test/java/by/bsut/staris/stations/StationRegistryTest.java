@@ -341,6 +341,24 @@ class StationRegistryTest {
         assertEquals(23, uza.distanceFromGomelKm());
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Гомель-Сортировочный с корректными атрибутами")
+    void containsGomelSortirovochny() {
+        Station sortirovochny = station("Гомель-Сортировочный");
+        assertEquals(Line.GOMEL_ZHLOBIN, sortirovochny.line());
+        assertEquals(StationType.MARSHALLING, sortirovochny.type());
+        assertEquals(5, sortirovochny.distanceFromGomelKm());
+    }
+
+    @Test
+    @DisplayName("Справочник содержит станцию Словечно с корректными атрибутами")
+    void containsSlovechno() {
+        Station slovechno = station("Словечно");
+        assertEquals(Line.GOMEL_KALINKOVICHI, slovechno.line());
+        assertEquals(StationType.INTERMEDIATE, slovechno.type()); 
+        assertEquals(194, slovechno.distanceFromGomelKm());
+    }
+
     // блок тестов метода M1
     @Test
     @DisplayName("findByLine корректно фильтрует станции (изолированный тест)")
@@ -348,13 +366,9 @@ class StationRegistryTest {
         Station station1 = new Station("Тестовая 1", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 10);
         Station station2 = new Station("Тестовая 2", Line.GOMEL_LUNINETS, StationType.INTERMEDIATE, 20);
         Station station3 = new Station("Тестовая 3", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 30);
-        
         StationRegistry testRegistry = new StationRegistry(List.of(station1, station2, station3));
-        
         List<Station> result = testRegistry.findByLine(Line.GOMEL_KALINKOVICHI);
-        
         assertEquals(2, result.size());
-
         assertTrue(result.contains(station1));
         assertTrue(result.contains(station3));
         assertFalse(result.contains(station2));
