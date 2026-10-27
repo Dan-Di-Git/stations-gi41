@@ -1,5 +1,11 @@
 package by.bsut.staris.stations;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+
 class StationRegistryTest {
 
     private final StationRegistry registry = new StationRegistry();
@@ -56,6 +63,13 @@ class StationRegistryTest {
     }
 
     @Test
+    void testGomelSortirovochnyExists() {
+        var station = new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 6);
+        org.junit.jupiter.api.Assertions.assertTrue(
+            new StationRegistry().all().contains(station),
+            "Станция Гомель-Сортировочный должна присутствовать в справочнике"
+    );
+}
     @DisplayName("Справочник содержит станцию Демехи с корректными атрибутами")
     void containsDemekhi() {
         Station demekhi = station("Демехи");
@@ -344,10 +358,10 @@ class StationRegistryTest {
     @Test
     @DisplayName("Справочник содержит станцию Гомель-Сортировочный с корректными атрибутами")
     void containsGomelSortirovochny() {
-        Station sortirovochny = station("Гомель-Сортировочный");
-        assertEquals(Line.GOMEL_ZHLOBIN, sortirovochny.line());
-        assertEquals(StationType.MARSHALLING, sortirovochny.type());
-        assertEquals(5, sortirovochny.distanceFromGomelKm());
+        Station station = station("Гомель-Сортировочный");
+        assertEquals(Line.GOMEL_ZHLOBIN, station.line());
+        assertEquals(StationType.MARSHALLING, station.type());
+        assertEquals(6, station.distanceFromGomelKm());
     }
 
     @Test

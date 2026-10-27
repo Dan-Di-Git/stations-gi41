@@ -12,5 +12,5 @@
 | Василевичи | GOMEL_KALINKOVICHI | INTERMEDIATE | 86 |
 | Тереховка | GOMEL_BAKHMACH | INTERMEDIATE | 43 |
 | Уза | GOMEL_ZHLOBIN | INTERMEDIATE | 23 |
-| Гомель-Сортировочный | GOMEL_ZHLOBIN | MARSHALLING | 5 |
 | Словечно | GOMEL_KALINKOVICHI | INTERMEDIATE | 194 |
+| Гомель-Сортировочный | GOMEL_ZHLOBIN | MARSHALLING | 6 |

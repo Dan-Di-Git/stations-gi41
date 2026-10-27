@@ -26,6 +26,29 @@ mvn verify
 
 | Вариант | Исполнитель | GitHub | Рецензент |
 | --- | --- | --- | --- |
+<<<<<<< HEAD
+| 1 | Аземша В. С. | @ssusurus | @asadchii2000-cyber |
+| 2 | Асадчий Е. А. | @asadchii2000-cyber | @Borya1009 |
+| 3 | Бобровник К. А. | @Borya1009 | @Xjensu |
+| 4 | Бусько А. С. | @Xjensu | @Volchok-lab |
+| 5 | Волков М. В. | @Volchok-lab | @ilyagavrilenko-silver |
+| 6 | Гавриленко А. В. | — | — |
+| 7 | Гавриленко И. С. | @ilyagavrilenko-silver | @DEVIL6761 |
+| 8 | Гвоздь Д. И. | @DEVIL6761 | @drozdova200 |
+| 9 | Дроздова У. В. | @drozdova200 | @smokedy22 |
+| 10 | Дулько А. В. | @smokedy22 | @Dankov755 |
+| 11 | Ковзелев Д. Е. | @Dankov755 | @n1kat3 |
+| 12 | Кулай Н. А. | @n1kat3 | @Veronikka38 |
+| 13 | Курьянович В. А. | @Veronikka38 | @deadowl1 |
+| 14 | Логинов М. Р. | @deadowl1 | @mashaosmolovskaya |
+| 15 | Осмоловская М. А. | @mashaosmolovskaya | @dzpoz |
+| 16 | Поздняков Д. Ю. | @dzpoz | @redkotanya2005-ai |
+| 17 | Редько Т. В. | @redkotanya2005-ai | @Unukovskij |
+| 18 | Траньков Р. С. | — (аккаунт @romashkaoriginal не найден) | — |
+| 19 | Унуковский Д. И. | @Unukovskij | @Milana11111 |
+| 20 | Хамицевич Д. И. | @Milana11111 | @polly-wvw |
+| 21 | Шуст П. А. | @polly-wvw | @ssusurus |
+=======
 | 1 | Алисиевич Е. А. | @Havpen | @gleb-xle-b |
 | 2 | Башлаков Г. Ю. | @gleb-xle-b | @escvi |
 | 3 | Бобрицкий А. С. | @escvi | @Violaveta |
@@ -48,5 +71,6 @@ mvn verify
 | 20 | Сыпалов И. С. | @dormeras | @qqq378 |
 | 21 | Царанков М. Е. | @qqq378 | @ilya-charachkin |
 | 22 | Чарачкин И. А. | @ilya-charachkin | @Havpen |
+>>>>>>> main
 
 Студенты без указанного аккаунта GitHub сообщают свой логин преподавателю; после этого таблица дополняется.

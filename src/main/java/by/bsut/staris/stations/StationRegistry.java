@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 /** Справочник станций Гомельского отделения Белорусской железной дороги. */
 public final class StationRegistry {
 
@@ -20,8 +21,8 @@ public final class StationRegistry {
                 new Station("Василевичи", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 86),
                 new Station("Тереховка", Line.GOMEL_BAKHMACH, StationType.INTERMEDIATE, 43),
                 new Station("Уза", Line.GOMEL_ZHLOBIN, StationType.INTERMEDIATE, 23),
-                new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 5),
-                new Station("Словечно", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 194)
+                new Station("Словечно", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 194),
+                new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 6)
                 // новые станции добавляются в конец списка
         );
     }
@@ -30,11 +31,10 @@ public final class StationRegistry {
         this.stations = List.copyOf(stations);
     }
 
+    /** Возвращает все станции справочника. */
     public List<Station> all() {
         return stations;
     }
-
-
 
     public String toMarkdownTable() {
         StringBuilder table = new StringBuilder();
@@ -79,21 +79,21 @@ public final class StationRegistry {
     }
     
     /**
- * Возвращает наименования станций с заданным префиксом без учёта регистра,
- * в алфавитном порядке.
- *
- * @throws IllegalArgumentException если {@code prefix} равен {@code null}
- */
-public List<String> namesStartingWith(String prefix) {
-    if (prefix == null) {
-        throw new IllegalArgumentException("Префикс не задан");
+     * Возвращает наименования станций с заданным префиксом без учёта регистра,
+     * в алфавитном порядке.
+     *
+     * @throws IllegalArgumentException если {@code prefix} равен {@code null}
+     */
+    public List<String> namesStartingWith(String prefix) {
+        if (prefix == null) {
+            throw new IllegalArgumentException("Префикс не задан");
+        }
+        return stations.stream()
+                .map(Station::name)
+                .filter(name -> name.regionMatches(true, 0, prefix, 0, prefix.length()))
+                .sorted()
+                .toList();
     }
-    return stations.stream()
-            .map(Station::name)
-            .filter(name -> name.regionMatches(true, 0, prefix, 0, prefix.length()))
-            .sorted()
-            .toList();
-}
 
     /**
      * Возвращает модуль разности расстояний для станций одного направления.
@@ -112,6 +112,7 @@ public List<String> namesStartingWith(String prefix) {
 
         return Math.abs(stationA.distanceFromGomelKm() - stationB.distanceFromGomelKm());
     }
+
     /**
      * Возвращает число станций по направлениям.
      * Направления без станций в результат не включаются.
@@ -124,6 +125,9 @@ public List<String> namesStartingWith(String prefix) {
                         Collectors.counting()));
     }
 
+    /**
+     * Возвращает список станций по заданному направлению.
+     */
     public List<Station> findByLine(Line line) {
         if (line == null) {
             throw new IllegalArgumentException("Направление не задано");
@@ -132,7 +136,6 @@ public List<String> namesStartingWith(String prefix) {
                 .filter(station -> station.line() == line)
                 .toList();
     }
-    
+
     // новые методы добавляются в конец класса
 }
-
