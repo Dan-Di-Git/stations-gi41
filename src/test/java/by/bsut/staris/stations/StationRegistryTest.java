@@ -339,5 +339,14 @@ class StationRegistryTest {
         assertEquals(23, uza.distanceFromGomelKm());
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Гомель-Сортировочный с корректными атрибутами")
+    void containsGomelSortirovochny() {
+        Station sortirovochny = station("Гомель-Сортировочный");
+        assertEquals(Line.GOMEL_ZHLOBIN, sortirovochny.line());
+        assertEquals(StationType.MARSHALLING, sortirovochny.type());
+        assertEquals(5, sortirovochny.distanceFromGomelKm());
+    }
+
     // тесты новых станций и методов добавляются в конец класса
 }
