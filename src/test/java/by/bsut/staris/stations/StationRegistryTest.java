@@ -348,5 +348,15 @@ class StationRegistryTest {
         assertEquals(5, sortirovochny.distanceFromGomelKm());
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Словечно с корректными атрибутами")
+    void containsSlovechno() {
+        Station slovechno = station("Словечно");
+        assertEquals(Line.GOMEL_KALINKOVICHI, slovechno.line());
+        assertEquals(StationType.INTERMEDIATE, slovechno.type()); 
+        assertEquals(194, slovechno.distanceFromGomelKm());
+    }
+
     // тесты новых станций и методов добавляются в конец класса
+
 }
