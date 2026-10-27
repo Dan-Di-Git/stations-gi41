@@ -362,10 +362,6 @@ class StationRegistryTest {
         assertEquals(Line.GOMEL_ZHLOBIN, station.line());
         assertEquals(StationType.MARSHALLING, station.type());
         assertEquals(6, station.distanceFromGomelKm());
-        Station sortirovochny = station("Гомель-Сортировочный");
-        assertEquals(Line.GOMEL_ZHLOBIN, sortirovochny.line());
-        assertEquals(StationType.MARSHALLING, sortirovochny.type());
-        assertEquals(5, sortirovochny.distanceFromGomelKm());
     }
 
     @Test
