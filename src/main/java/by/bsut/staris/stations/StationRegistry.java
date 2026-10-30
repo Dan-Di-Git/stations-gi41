@@ -22,7 +22,8 @@ public final class StationRegistry {
                 new Station("Тереховка", Line.GOMEL_BAKHMACH, StationType.INTERMEDIATE, 43),
                 new Station("Уза", Line.GOMEL_ZHLOBIN, StationType.INTERMEDIATE, 23),
                 new Station("Словечно", Line.GOMEL_KALINKOVICHI, StationType.INTERMEDIATE, 194),
-                new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 6)
+                new Station("Гомель-Сортировочный", Line.GOMEL_ZHLOBIN, StationType.MARSHALLING, 6),
+                new Station("Светлогорск-на-Березине", Line.ZHLOBIN_KALINKOVICHI, StationType.INTERMEDIATE, 124)
                 // новые станции добавляются в конец списка
         );
     }
