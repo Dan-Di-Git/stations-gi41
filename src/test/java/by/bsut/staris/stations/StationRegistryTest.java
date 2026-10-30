@@ -404,5 +404,50 @@ class StationRegistryTest {
                 () -> registry.findByLine(null));
     }
 
+// ==================== Дополнительные тесты для метода toMarkdownTable (Issue #32) ====================
+
+    @Test
+    @DisplayName("toMarkdownTable: для пустого справочника возвращаются только заголовок и разделитель")
+    void toMarkdownTableReturnsOnlyHeaderWhenRegistryIsEmpty() {
+        StationRegistry emptyRegistry = new StationRegistry(List.of());
+        List<String> lines = emptyRegistry.toMarkdownTable().lines().toList();
+
+        assertEquals(2, lines.size(), "Для пустого справочника должно быть ровно 2 строки");
+        assertEquals("| Станция | Направление | Тип | Расстояние от Гомеля, км |", lines.get(0));
+        assertEquals("| --- | --- | --- | --- |", lines.get(1));
+    }
+
+    @Test
+    @DisplayName("toMarkdownTable: корректно формирует разметку для справочника из одной станции")
+    void toMarkdownTableFormatsSingleStationRegistry() {
+        Station testStation = new Station("Тестовая", Line.GOMEL_BRYANSK, StationType.FREIGHT, 50);
+        StationRegistry singleRegistry = new StationRegistry(List.of(testStation));
+        List<String> lines = singleRegistry.toMarkdownTable().lines().toList();
+
+        assertEquals(3, lines.size(), "Для одной станции должно быть ровно 3 строки (заголовок, разделитель, станция)");
+        assertEquals("| Тестовая | GOMEL_BRYANSK | FREIGHT | 50 |", lines.get(2));
+    }
+
+    @Test
+    @DisplayName("toMarkdownTable: экранирует символ '|' в названии станции при генерации таблицы")
+    void toMarkdownTableEscapesPipeCharacterInTableName() {
+        Station stationWithPipe = new Station("Пункт A|B", Line.GOMEL_ZHLOBIN, StationType.INTERMEDIATE, 15);
+        StationRegistry customRegistry = new StationRegistry(List.of(stationWithPipe));
+        List<String> lines = customRegistry.toMarkdownTable().lines().toList();
+
+        assertEquals("| Пункт A\\|B | GOMEL_ZHLOBIN | INTERMEDIATE | 15 |", lines.get(2));
+    }
+
+    @Test
+    @DisplayName("toMarkdownTable: заменяет переносы строк в названии станции пробелами")
+    void toMarkdownTableReplacesLineBreaksInTableName() {
+        Station stationWithBreak = new Station("Станция\nНовая", Line.GOMEL_KALINKOVICHI, StationType.PASSENGER, 30);
+        StationRegistry customRegistry = new StationRegistry(List.of(stationWithBreak));
+        List<String> lines = customRegistry.toMarkdownTable().lines().toList();
+
+        assertEquals(3, lines.size(), "Перенос строки внутри названия не должен создавать лишнюю строку в таблице");
+        assertEquals("| Станция Новая | GOMEL_KALINKOVICHI | PASSENGER | 30 |", lines.get(2));
+    }
+
     // тесты новых станций и методов добавляются в конец класса
 }
