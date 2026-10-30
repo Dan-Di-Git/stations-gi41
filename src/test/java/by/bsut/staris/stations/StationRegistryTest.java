@@ -404,7 +404,16 @@ class StationRegistryTest {
                 () -> registry.findByLine(null));
     }
 
-// ==================== Дополнительные тесты для метода toMarkdownTable (Issue #32) ====================
+    @Test
+    @DisplayName("Справочник содержит станцию Светлогорск-на-Березине с корректными атрибутами")
+    void containsSvetlogorskNaBerezine() {
+        Station station = station("Светлогорск-на-Березине");
+        assertEquals(Line.ZHLOBIN_KALINKOVICHI, station.line());
+        assertEquals(StationType.INTERMEDIATE, station.type());
+        assertEquals(124, station.distanceFromGomelKm());
+    }
+
+    // ==================== Дополнительные тесты для метода toMarkdownTable (Issue #32) ====================
 
     @Test
     @DisplayName("toMarkdownTable: для пустого справочника возвращаются только заголовок и разделитель")
