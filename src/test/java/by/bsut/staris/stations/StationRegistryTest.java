@@ -404,5 +404,14 @@ class StationRegistryTest {
                 () -> registry.findByLine(null));
     }
 
+    @Test
+    @DisplayName("Справочник содержит станцию Светлогорск-на-Березине с корректными атрибутами")
+    void containsSvetlogorskNaBerezine() {
+        Station station = station("Светлогорск-на-Березине");
+        assertEquals(Line.ZHLOBIN_KALINKOVICHI, station.line());
+        assertEquals(StationType.INTERMEDIATE, station.type());
+        assertEquals(124, station.distanceFromGomelKm());
+    }
+
     // тесты новых станций и методов добавляются в конец класса
 }
